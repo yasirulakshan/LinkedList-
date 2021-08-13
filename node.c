@@ -13,7 +13,18 @@
 // implementation
 void insert_node_before(list *lst, int index, char *word)
 {	
-	// TODO
+	if (lst->head == NULL){
+		lst->head = word;
+	}
+
+	else{
+		int going = 0;
+		while (going < index){
+			going++;
+			
+		}
+	}
+
 }
 
 void insert_node_after(list *lst, int index, char *word)
