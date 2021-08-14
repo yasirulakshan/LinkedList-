@@ -14,15 +14,23 @@
 void insert_node_before(list *lst, int index, char *word)
 {	
 	if (lst->head == NULL){
+		malloc(sizeof(struct NODE));
 		lst->head = word;
 	}
 
 	else{
+		node* current = lst->head;
+		node* previous = current->prev;
 		int going = 0;
 		while (going < index){
 			going++;
-			
+			current = current->next;
+			previous = current;
 		}
+		malloc(sizeof(struct NODE));
+		previous->next = word;
+		
+
 	}
 
 }
