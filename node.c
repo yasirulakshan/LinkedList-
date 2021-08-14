@@ -14,7 +14,7 @@
 void insert_node_before(list *lst, int index, char *word)
 {	
 	if (lst->head == NULL){
-		malloc(sizeof(struct NODE));
+		struct NODE* word = malloc(sizeof(struct NODE));
 		lst->head = word;
 	}
 
@@ -27,9 +27,10 @@ void insert_node_before(list *lst, int index, char *word)
 			current = current->next;
 			previous = current;
 		}
-		malloc(sizeof(struct NODE));
+		struct NODE* word = malloc(sizeof(struct NODE));
+		word->prev = previous;
+		word->next = current;
 		previous->next = word;
-		
 
 	}
 
