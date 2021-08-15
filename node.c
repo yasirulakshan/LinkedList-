@@ -28,9 +28,11 @@ void insert_node_before(list *lst, int index, char *word)
 			previous = current;
 		}
 		struct NODE* word = malloc(sizeof(struct NODE));
+		word->word = word;
 		word->prev = previous;
 		word->next = current;
 		previous->next = word;
+		current->prev = word;
 
 	}
 
