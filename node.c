@@ -8,34 +8,28 @@
 #include "node.h" // do not modify this file
 
 // put your function prototypes for additional helper functions below:
+node* goToIndex(node* nd,int index){
+	if (index==0){
+		return &nd;
+	}
+	else{
+		index--;
+		return goToIndex(&(nd->next),index);
+	}
+}
 
 
 // implementation
 void insert_node_before(list *lst, int index, char *word)
 {	
-	if (lst->head == NULL){
-		struct NODE* word = malloc(sizeof(struct NODE));
-		lst->head = word;
-	}
-
-	else{
-		node* current = lst->head;
-		node* previous = current->prev;
-		int going = 0;
-		while (going < index){
-			going++;
-			current = current->next;
-			previous = current;
-		}
-		struct NODE* word = malloc(sizeof(struct NODE));
-		word->word = word;
-		word->prev = previous;
-		word->next = current;
-		previous->next = word;
-		current->prev = word;
-
-	}
-
+	int going = 0;
+	node* indexed = goToIndex(&(lst->head),index);
+	node* new = (node*)malloc(sizeof(sizeof(node)));
+	new->word = (char*)malloc(20*sizeof(char));
+	strcpy(new->word,word);
+	new->next = indexed;
+	new->prev = indexed->prev;
+	indexed->prev = new;
 }
 
 void insert_node_after(list *lst, int index, char *word)
