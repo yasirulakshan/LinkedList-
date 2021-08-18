@@ -15,6 +15,7 @@
 // function prototypes
 void print_list(list * lst); 
 void run(list * lst);
+
 void addToLst(node* nd,char* str){
     if(nd == NULL){
         node* new = (node*) malloc(sizeof(node));
@@ -45,7 +46,7 @@ int main()
 {
     list * lst = (list *) malloc(sizeof(list));
     lst->head = NULL;
-	run(&lst);
+	run(lst);
     print_list(lst);
     free(lst);
 	return 0;
@@ -55,15 +56,20 @@ int main()
 void run(list *lst) 
 {
 	char* word = (char* ) malloc(20*sizeof(char));
+    //node* nd = (node*)malloc(sizeof(node));
+    //nd=NULL;
+    list * temp = (list *) malloc(sizeof(list));
+    temp->head = NULL;
+
     while (1){
         scanf("%s",word);
         if (!strcmp(word,"0")){
             break;
         }
-        lst->head =NULL;
-        addToLst(&(lst->head),word);
-        
+        addToLst(temp->head,word); 
     }
+    lst=temp;
+    
 }
 
 //Print the list contents
