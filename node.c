@@ -18,6 +18,31 @@ node* goToIndex(node* nd,int index){
 	}
 }
 
+void addToLst(node* nd,char* str){
+    if(nd == NULL){
+        node* new = (node*) malloc(sizeof(node));
+        new->word = (char* ) malloc(20*sizeof(char));
+        strcpy(new->word,str);
+        new->prev = NULL;
+        new->next = NULL;
+        nd = new;
+        return;
+    }
+    else if(nd->next == NULL){
+        node* new = (node*) malloc(sizeof(node));
+        new->word = (char* ) malloc(20*sizeof(char));
+        strcpy(new->word,str);
+        new->next = NULL;
+        new->prev = (node*) malloc(sizeof(node));
+        new->prev = nd;
+        nd->next = new;
+        return;
+    }
+
+    else{
+        return (addToLst(nd->next,str));
+    }
+}
 
 // implementation
 void insert_node_before(list *lst, int index, char *word)

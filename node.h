@@ -22,3 +22,4 @@ void insert_node_after(list *lst, int index, char *word);
 void delete_node(list *lst, int index);
 void delete_list(list *lst);
 char *list_to_sentence(list *lst);
+void addToLst(node* nd,char* str);

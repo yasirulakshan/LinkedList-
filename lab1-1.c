@@ -1,6 +1,7 @@
 // general purpose standard C lib
 #include <stdio.h>
 #include <stdlib.h> // stdlib includes malloc() and free()
+#include <string.h>
 
 // user-defined header files
 #include "node.h"
@@ -15,32 +16,6 @@
 // function prototypes
 void print_list(list * lst); 
 void run(list * lst);
-
-void addToLst(node* nd,char* str){
-    if(nd == NULL){
-        node* new = (node*) malloc(sizeof(node));
-        new->word = (char* ) malloc(20*sizeof(char));
-        strcpy(new->word,str);
-        new->prev = NULL;
-        new->next = NULL;
-        nd = new;
-        return;
-    }
-    else if(nd->next == NULL){
-        node* new = (node*) malloc(sizeof(node));
-        new->word = (char* ) malloc(20*sizeof(char));
-        strcpy(new->word,str);
-        new->next = NULL;
-        new->prev = nd;
-        nd->next = new;
-        return;
-    }
-
-    else{
-        return (addToLst(nd->next,str));
-    }
-}
-
 
 int main()
 {
@@ -58,7 +33,7 @@ void run(list *lst)
 	char* word = (char* ) malloc(20*sizeof(char));
     //node* nd = (node*)malloc(sizeof(node));
     //nd=NULL;
-    list * temp = (list *) malloc(sizeof(list));
+    list* temp = (list *) malloc(sizeof(list));
     temp->head = NULL;
 
     while (1){
