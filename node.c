@@ -10,70 +10,98 @@
 // put your function prototypes for additional helper functions below:
 node* goToIndex(node* nd,int index){
 	if (index==0){
-		return &nd;
+		return nd;
 	}
 	else{
-		index--;
-		return goToIndex(&(nd->next),index);
+        if (index > 0){
+            index--;
+            return goToIndex(nd->next,index);
+        }
+        else{
+            index++;
+		    return goToIndex(nd->prev,index);
+        }
 	}
 }
 
-void addToLst(node* nd,char* str){
-    if(nd == NULL){
-        node* new = (node*) malloc(sizeof(node));
-        new->word = (char* ) malloc(20*sizeof(char));
-        strcpy(new->word,str);
-        new->prev = NULL;
-        new->next = NULL;
-        nd = new;
-        return;
-    }
-    else if(nd->next == NULL){
-        node* new = (node*) malloc(sizeof(node));
-        new->word = (char* ) malloc(20*sizeof(char));
-        strcpy(new->word,str);
-        new->next = NULL;
-        new->prev = (node*) malloc(sizeof(node));
-        new->prev = nd;
-        nd->next = new;
-        return;
-    }
 
-    else{
-        return (addToLst(nd->next,str));
-    }
-}
 
 // implementation
 void insert_node_before(list *lst, int index, char *word)
 {	
-	int going = 0;
-	node* indexed = goToIndex(&(lst->head),index);
 	node* new = (node*)malloc(sizeof(sizeof(node)));
-	new->word = (char*)malloc(20*sizeof(char));
-	strcpy(new->word,word);
-	new->next = indexed;
-	new->prev = indexed->prev;
-	indexed->prev = new;
+	new->word = word;
+
+    if(lst->head == NULL){
+        lst->head = new;
+        new->next = new;
+        new->prev = new;
+    }
+    else{
+        node* indexed = (node*) goToIndex(lst->head,index);
+        indexed->prev->next = new;
+        new->prev = indexed->prev;
+        indexed->prev = new;
+        new->next = indexed;
+    }
 }
 
 void insert_node_after(list *lst, int index, char *word)
 {
-	// TODO
+	node* new = (node*)malloc(sizeof(sizeof(node)));
+	new->word = word;
+
+    if(lst->head == NULL){
+        lst->head = new;
+        new->next = new;
+        new->prev = new;
+    }
+    else{
+        node* indexed = (node*) goToIndex(lst->head,index);
+        indexed->next->prev = new;
+        new->next = indexed->next;
+        new->prev = indexed;
+        indexed->next = new;
+    }
+
 }
 
 char *list_to_sentence(list *lst)
 {
-	// TODO
-    return NULL; // Change this line accordingly
+	char* sentence = (char*) malloc(sizeof(char)*MAX_WORD_LENGTH);
+    strcpy(sentence,"");
+    node* temp = lst->head;
+    while(temp != lst->head){
+        strcat(sentence,temp->word);
+        if (temp->next != lst->head){
+            strcat(sentence," ");
+        }
+        temp = temp->next;
+
+    }
+    return sentence; // Change this line accordingly
 }
 
 void delete_node(list *lst, int index)
 {
-	// TODO
+	node* nd = (node*)goToIndex(lst->head,index);
+    nd->prev->next = nd->next;
+    nd->next->prev = nd->prev;
+
+    free(nd->word);
+    free(nd);
 }
 
 void delete_list(list *lst)
 {
-	// TODO
+	node* nxt = lst->head->next;
+    node* temp;
+    while(nxt != lst->head){
+        temp = nxt->next;
+        free(nxt);
+        nxt =temp;
+    }
+
+    free(lst->head);
+    lst->head = NULL;
 }

@@ -30,31 +30,62 @@ int main()
 // parse the input
 void run(list *lst) 
 {
-	char* word = (char* ) malloc(20*sizeof(char));
-    //node* nd = (node*)malloc(sizeof(node));
-    //nd=NULL;
-    list* temp = (list *) malloc(sizeof(list));
-    temp->head = NULL;
-
-    while (1){
-        scanf("%s",word);
-        if (!strcmp(word,"0")){
+	char* word = (char* ) malloc(MAX_WORD_LENGTH*sizeof(char));
+    
+    while(1){
+        scanf("%20[^,\n]",word);
+        insert_node_before(lst,0,word);
+        char temp;
+        scanf("%c",&temp);
+        if (temp == '\n'){
             break;
         }
-        addToLst(temp->head,word); 
+        word = (char* ) malloc(MAX_WORD_LENGTH*sizeof(char));
     }
-    lst=temp;
+
+    while(1){
+        int cmd;
+        scanf("%d",&cmd);
+        if (cmd == 0){
+            break;
+        }
+        else{
+            int index;
+            char* word =  (char *)malloc(sizeof(char) * MAX_WORD_LENGTH) ;
+            switch (cmd)
+            {
+            case INSERT_BEFORE:
+                scanf("%d %s\n",&index,word);
+                insert_node_before(lst,index,word);
+                break;
+
+            case INSERT_AFTER:
+                scanf("%d %s\n",&index,word);
+                insert_node_after(lst,index,word);
+                break;
+
+            case DELETE_NODE:
+                scanf("%d %s\n",&index,word);
+                insert_node_after(lst,index,word);
+                break;
+            
+            case DELETE_LIST:
+                delete_list(lst);
+                break;
+            
+            default:
+                break;
+            }
+        }
+    }
     
 }
 
 //Print the list contents
 void print_list(list * lst)
 {
-    node* printing = malloc(sizeof(node));
-    printing = lst->head;
-    while(printing!=NULL){
-        printf("%s\n",printing->word);
-        printing = printing->next;
-    }
+    char* sentence = list_to_sentence(lst);
+    printf("%s\n",sentence);
+    free(sentence);
 }
 
